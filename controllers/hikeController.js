@@ -28,13 +28,19 @@ const getAHike = async (req, res) => {
 // CREATE a new hike
 
 const createHike = async (req, res) => {
-  const { title, description, image, rating } = req.body;
+  const { title, description, rating } = req.body;
+  const images = req.files.map((file) => ({
+    url: file.path,
+    filename: file.filename,
+  }));
+
   try {
-    const hike = await Hike.create({ title, description, image, rating });
+    const hike = await Hike.create({ title, description, images, rating });
     res.status(200).json(hike);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+  console.log(req.body, req.files);
 };
 
 // DELETE a hike

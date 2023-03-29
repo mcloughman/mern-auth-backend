@@ -1,5 +1,5 @@
 const express = require("express");
-const Hike = require("../models/hikeModel");
+
 const {
   createHike,
   getAHike,
@@ -9,8 +9,9 @@ const {
 } = require("../controllers/hikeController");
 
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
 
+const { storage } = require("../cloudinary");
+const upload = multer({ storage });
 const router = express.Router();
 
 // GET all hikes
@@ -19,7 +20,7 @@ router.get("/", getHikes);
 router.get("/:id", getAHike);
 
 // POST a new hike
-router.post("/", createHike);
+router.post("/", upload.array("image"), createHike);
 
 // DELETE a <hike></hike>
 router.delete("/:id", deleteHike);

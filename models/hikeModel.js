@@ -7,8 +7,8 @@ const hikeSchema = new Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
+    images: {
+      type: [{ url: String, filename: String }],
     },
     description: {
       type: String,

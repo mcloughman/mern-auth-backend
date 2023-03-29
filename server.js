@@ -1,6 +1,8 @@
 const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const hikeRoutes = require("./routes/hikes");
 
 // express app
