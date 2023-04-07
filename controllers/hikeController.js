@@ -34,6 +34,22 @@ const createHike = async (req, res) => {
     filename: file.filename,
   }));
 
+  let emptyFields = [];
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!description) {
+    emptyFields.push("description");
+  }
+  if (!rating) {
+    emptyFields.push("rating");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill out required fields".emptyFields });
+  }
+
   try {
     const hike = await Hike.create({ title, description, images, rating });
     res.status(200).json(hike);
