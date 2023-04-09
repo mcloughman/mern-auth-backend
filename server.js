@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const hikeRoutes = require("./routes/hikes");
+const userRoutes = require("./routes/user");
 
 // express app
 const app = express();
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use("/api/hikes", hikeRoutes);
+app.use("/api/user", userRoutes);
 // listen for requests
 
 // connect to db
