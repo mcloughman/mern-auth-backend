@@ -8,6 +8,7 @@ const {
   updateHike,
 } = require("../controllers/hikeController");
 
+const requireAuth = require("../middleware/requireAuth");
 const multer = require("multer");
 
 const { storage } = require("../cloudinary");
@@ -18,6 +19,9 @@ const router = express.Router();
 router.get("/", getHikes);
 
 router.get("/:id", getAHike);
+
+// Strtegically put this middleware below because I don't want to require authorization for get routes
+router.use(requireAuth);
 
 // POST a new hike
 router.post("/", upload.array("image"), createHike);
