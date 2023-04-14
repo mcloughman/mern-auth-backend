@@ -51,26 +51,35 @@ const createHike = async (req, res) => {
   }
 
   try {
-    const hike = await Hike.create({ title, description, images, rating });
+    // we have access to user if requireAuth middleware has been satisfied
+    const user_id = req.user._id;
+    const hike = await Hike.create({
+      title,
+      description,
+      images,
+      rating,
+      user_id,
+    });
     res.status(200).json(hike);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-  console.log(req.body, req.files);
 };
 
 // DELETE a hike
 
 const deleteHike = async (req, res) => {
+  const user_id = req.user._id;
   const { id } = req.params;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such hike :(" });
   }
-  const hike = await Hike.findOneAndDelete({ _id: id });
+  const hike = await Hike.findOneAndDelete({ _id: id, user_id });
   if (!hike) {
-    return res.status(404).json({ error: "No such hike!" });
+    throw Error("User is only authorized to delete hikes that they posted");
   }
-  res.status(200).json(hike);
+  return res.status(200).json(hike);
 };
 
 // UPDATE a hike

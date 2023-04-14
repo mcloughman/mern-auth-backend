@@ -9,10 +9,8 @@ const userRoutes = require("./routes/user");
 // express app
 const app = express();
 // middleware
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use((req, res, next) => {
-  console.log(req.path, req.method);
-
   next();
 });
 

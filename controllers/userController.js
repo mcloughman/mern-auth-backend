@@ -12,9 +12,10 @@ const loginUser = async (req, res) => {
     // .signup is the static method we added to user model
     const user = await User.login(email, password);
     //create token
+    console.log(user._id);
     const token = createToken(user._id);
     // usere being the new document that was created in mogodb
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, id: user._id });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
