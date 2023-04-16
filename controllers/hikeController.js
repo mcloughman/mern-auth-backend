@@ -47,7 +47,11 @@ const createHike = async (req, res) => {
   if (emptyFields.length > 0) {
     return res
       .status(400)
-      .json({ error: "Please fill out required fields", emptyFields });
+      .json({
+        error:
+          "Please fill out required fields including at least one uploaded image",
+        emptyFields,
+      });
   }
 
   try {

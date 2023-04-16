@@ -9,6 +9,7 @@ const hikeSchema = new Schema(
     },
     images: {
       type: [{ url: String, filename: String }],
+      required: true,
     },
     description: {
       type: String,
