@@ -11,6 +11,7 @@ const app = express();
 // middleware
 app.use(express.json({ limit: "50mb" }));
 app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
   next();
 });
 
@@ -23,6 +24,7 @@ app.use("/api/user", userRoutes);
 mongoose
   .connect(process.env.MONGO_URI || 4000)
   .then(() => {
+    console.log("connected");
     app.listen(process.env.PORT, () => {
       console.log(`Connected to db and listening on port ${process.env.PORT}`);
     });
